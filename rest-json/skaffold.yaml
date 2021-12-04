@@ -1,0 +1,17 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: rest-json
+build:
+  artifacts:
+  - image: pom-xml-image
+    buildpacks:
+      builder: gcr.io/buildpacks/builder:v1
+deploy:
+  kubectl:
+    manifests:
+    - deployment.yaml
+portForward:
+- resourceType: service
+  resourceName: pom-xml-image
+  port: 8080

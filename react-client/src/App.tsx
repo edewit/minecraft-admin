@@ -1,10 +1,9 @@
 import '@patternfly/react-core/dist/styles/base.css';
+
 import React, { useState } from 'react';
 import { Nav, NavItem, NavList } from '@patternfly/react-core';
 import { Link, Route, Switch, Redirect } from 'react-router-dom';
-import FruitList from './FruitList';
-import LegumeList from './LegumeList';
-import FruitForm from './FruitForm';
+import CreateServer from './CreateServer';
 import Welcome from './Welcome';
 import { Layout } from './layout';
 
@@ -29,13 +28,7 @@ function App() {
           <Link to="/">Welcome</Link>
         </NavItem>
         <NavItem itemId={1} isActive={active === 1} onClick={() => setActive(1)}>
-          <Link to="/fruitList">Fruit List</Link>
-        </NavItem>
-        <NavItem itemId={2} isActive={active === 2} onClick={() => setActive(2)}>
-          <Link to="/legume">Legume List</Link>
-        </NavItem>
-        <NavItem itemId={3} isActive={active === 3} onClick={() => setActive(3)}>
-          <Link to="/addFruit">Add Fruit</Link>
+          <Link to="/create">Create minecraft instance</Link>
         </NavItem>
       </NavList>
     </Nav>
@@ -45,14 +38,8 @@ function App() {
   return (
     <Layout pageNav={PageNav}>
       <Switch>
-        <Route path="/fruitList">
-          <FruitList />
-        </Route>
-        <Route path="/legume">
-          <LegumeList />
-        </Route>
-        <Route path="/addFruit">
-          <FruitForm />
+        <Route path="/create">
+          <CreateServer />
         </Route>
         <Route path="/">
           <Welcome />

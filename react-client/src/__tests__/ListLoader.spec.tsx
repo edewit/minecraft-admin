@@ -6,7 +6,7 @@ import { Fruit } from '../types';
 import { KeycloakContext } from '../KeycloakContext';
 
 describe('<FruitLoader />', () => {
-  it('should return corresponding list of fruit', async (done) => {
+  it('should return corresponding list of fruit', (done) => {
     const mockSuccessResponse = [
       { name: 'dummy', descption: 'yummy' }
     ];
@@ -16,7 +16,7 @@ describe('<FruitLoader />', () => {
       json: () => mockJsonPromise,
     });
     jest.spyOn(global as any, 'fetch').mockImplementation(() => mockFetchPromise);
-    const KeycloakMock = jest.fn<KeycloakInstance<'native'>>(() => {});
+    const KeycloakMock = jest.fn();
     const keycloak = new KeycloakMock();
 
     const comp = render(
@@ -29,7 +29,7 @@ describe('<FruitLoader />', () => {
       </KeycloakContext.Provider>
     );
 
-    await comp.findByText('Fruit has been loaded 1');
+    comp.findByText('Fruit has been loaded 1');
     expect((global as any).fetch).toHaveBeenCalledTimes(1);
 
     process.nextTick(() => {

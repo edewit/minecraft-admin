@@ -7,8 +7,7 @@ const Welcome: FunctionComponent = () => {
       <TextContent>
         <Text component="h1">Welcome</Text>
         <Text component="p">
-          Only if you are logged in as admin can you add new fruit to the fruit list. If you are use test you'll get a "Forbidden" error.
-          In a real application we wouldn't even show the Administrator options in the menu, but here we want to see that keycloak works.
+          Create your own server here ;)
         </Text>
       </TextContent>
     </Fragment>

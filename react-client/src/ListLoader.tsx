@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from 'react';
 import DataLoader from './DataLoader';
-import { useKeycloak } from './KeycloakContext';
 import { Alert } from '@patternfly/react-core';
 
 export function FruitLoader(props: any) {
@@ -14,12 +13,10 @@ export function LegumeLoader(props: any) {
 function ListLoader(props: any) {
   const [error, setError] = useState('');
 
-  const token = useKeycloak().token;
   const loader = async () => {
     return await fetch(props.url, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
       },
     })
       .then(resp => {

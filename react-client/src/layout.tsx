@@ -14,11 +14,10 @@ import {
 } from "@patternfly/react-core";
 import React, { FunctionComponent, ReactNode, useState } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import logo from "./assets/logo/logo.svg";
-import style from "./layout.module.scss";
-import { useKeycloak } from "./KeycloakContext";
+import logo from "./assets/logo/logo.png";
 import _ from "lodash";
-import { KeycloakInstance } from "keycloak-js";
+
+import style from "./layout.module.scss";
 
 interface LayoutProps {
   children: ReactNode;
@@ -27,18 +26,9 @@ interface LayoutProps {
 
 export const Layout: FunctionComponent<LayoutProps> = (props) => {
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
-  const keycloak = useKeycloak();
-  let name = loggedInUserName(keycloak);
   const userDropdownItems = [
-    <DropdownItem key="1" onClick={() => keycloak.logout()}>
-      Logout
-    </DropdownItem>,
-    <DropdownItem
-      key="2"
-      onClick={() => (window.location.href = keycloak.createAccountUrl())}
-    >
-      Manage Account
-    </DropdownItem>,
+    <DropdownItem key="1">Logout</DropdownItem>,
+    <DropdownItem key="2">Manage Account</DropdownItem>,
   ];
   const PageToolbar = (
     <PageHeaderTools>
@@ -53,7 +43,7 @@ export const Layout: FunctionComponent<LayoutProps> = (props) => {
               <DropdownToggle
                 onToggle={(val: boolean) => setIsUserDropdownOpen(val)}
               >
-                {name}
+                Your minecraft name
               </DropdownToggle>
             }
             dropdownItems={userDropdownItems}
@@ -65,14 +55,16 @@ export const Layout: FunctionComponent<LayoutProps> = (props) => {
 
   const Header = (
     <PageHeader
-      logo={<Brand src={logo} alt="keycloak" className={style.brand} />}
+      logo={<Brand src={logo} alt="learn.study" className={style.brand} />}
       logoProps={{ href: "/" }}
       headerTools={PageToolbar}
       className={style.header}
     />
   );
 
-  const Sidebar = <PageSidebar nav={props.pageNav} theme="dark" />;
+  const Sidebar = (
+    <PageSidebar nav={props.pageNav} theme="dark" className={style.sidebar} />
+  );
 
   return (
     <Router>
@@ -84,18 +76,3 @@ export const Layout: FunctionComponent<LayoutProps> = (props) => {
     </Router>
   );
 };
-function loggedInUserName(keycloak: KeycloakInstance<"native">) {
-  const givenName = _.get(keycloak, "tokenParsed.given_name");
-  const familyName = _.get(keycloak, "tokenParsed.family_name");
-  const userName =
-    givenName ||
-    familyName ||
-    _.get(keycloak, "tokenParsed.preferred_username");
-  let name = "Anonymous";
-  if (givenName && familyName) {
-    name = givenName + " " + familyName;
-  } else if (userName) {
-    name = userName;
-  }
-  return name;
-}

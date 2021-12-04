@@ -26,25 +26,27 @@
         </configuration>
         <executions>
           <execution>
-            <id>install node and yarn</id>
+            <id>install node</id>
             <goals>
-              <goal>install-node-and-yarn</goal>
+              <goal>install-node-and-npm</goal>
             </goals>
             <configuration>
-              <nodeVersion>v11.12.0</nodeVersion>
-              <yarnVersion>v1.13.0</yarnVersion>
+              <nodeVersion>v16.0.0</nodeVersion>
             </configuration>
           </execution>
           <execution>
-            <id>yarn install</id>
+            <id>install</id>
             <goals>
-              <goal>yarn</goal>
+              <goal>npm</goal>
             </goals>
+            <configuration>
+              <arguments>install</arguments>
+            </configuration>
           </execution>
           <execution>
-            <id>yarn test</id>
+            <id>test</id>
             <goals>
-              <goal>yarn</goal>
+              <goal>npm</goal>
             </goals>
             <configuration>
               <arguments>test</arguments>
@@ -52,12 +54,12 @@
             <phase>test</phase>
           </execution>
           <execution>
-            <id>yarn build</id>
+            <id>build</id>
             <goals>
-              <goal>yarn</goal>
+              <goal>npm</goal>
             </goals>
             <configuration>
-              <arguments>build</arguments>
+              <arguments>run build</arguments>
             </configuration>
           </execution>
         </executions>
